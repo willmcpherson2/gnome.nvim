@@ -1,22 +1,15 @@
-local cmd = [[
-test $(dconf read /org/gnome/desktop/interface/color-scheme) = "'prefer-dark'"
-]]
+local cmd = "gsettings monitor org.gnome.desktop.interface color-scheme"
 
-local function on_exit(_, exit_code, _)
-  local is_dark_mode = exit_code == 0
-  if is_dark_mode then
-    vim.api.nvim_set_option('background', 'dark')
+local function on_stdout(_, data, _)
+  if data[1] == "color-scheme: 'prefer-dark'" then
+    vim.api.nvim_set_option("background", "dark")
   else
-    vim.api.nvim_set_option('background', 'light')
+    vim.api.nvim_set_option("background", "light")
   end
 end
 
-local function update()
-  vim.fn.jobstart(cmd, { on_exit = on_exit })
-end
-
 local function init()
-  vim.fn.timer_start(1000, update, { ['repeat'] = -1 })
+  vim.fn.jobstart(cmd, { on_stdout = on_stdout })
 end
 
 return { init = init }
