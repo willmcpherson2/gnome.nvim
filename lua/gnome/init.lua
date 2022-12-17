@@ -13,6 +13,7 @@ local function on_stdout(options)
   end
 end
 
+---@param options { on_light: fun(), on_dark: fun() }
 local function setup(options)
   setmetatable(options, { __index = {
     on_light = function()
