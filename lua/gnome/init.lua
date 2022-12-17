@@ -1,8 +1,11 @@
-local cmd = "gsettings monitor org.gnome.desktop.interface color-scheme"
+local cmd = [[
+gsettings get org.gnome.desktop.interface color-scheme;
+gsettings monitor org.gnome.desktop.interface color-scheme
+]]
 
 local function on_stdout(options)
   return function(_, data, _)
-    if data[1] == "color-scheme: 'prefer-dark'" then
+    if string.match(data[1], "dark") then
       options.on_dark()
     else
       options.on_light()
