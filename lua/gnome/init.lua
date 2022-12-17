@@ -13,7 +13,7 @@ local function on_stdout(options)
   end
 end
 
-local function init(options)
+local function setup(options)
   setmetatable(options, { __index = {
     on_light = function()
       vim.api.nvim_set_option("background", "light")
@@ -26,4 +26,4 @@ local function init(options)
   vim.fn.jobstart(cmd, { on_stdout = on_stdout(options) })
 end
 
-return { init = init }
+return { setup = setup }

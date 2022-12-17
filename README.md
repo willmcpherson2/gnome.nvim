@@ -10,7 +10,7 @@ extension](https://extensions.gnome.org/extension/2236/night-theme-switcher/).
 use {
   "willmcpherson2/gnome.nvim",
   config = function()
-    require("gnome").init {
+    require("gnome").setup {
       -- these are the default options and can be omitted
       on_light = function()
         vim.api.nvim_set_option("background", "light")
